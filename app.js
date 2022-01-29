@@ -66,6 +66,7 @@ const postAuthSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
+
 router.post("/auth", async (req, res) => {
   try {
     const { email, password } = await postAuthSchema.validateAsync(req.body);
@@ -92,10 +93,7 @@ router.post("/auth", async (req, res) => {
 });
 
 router.get("/users/me", authMiddleware, async (req, res) => {
-  const { user } = res.locals;
-  res.send({
-    user,
-  });
+  res.send({ user: res.locals.user });
 });
 
 /**
